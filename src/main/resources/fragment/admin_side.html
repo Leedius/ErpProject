@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<th:block th:fragment="adminSideFragment">
+
+<style>
+/*===== VARIABLES CSS =====*/
+:root{
+  --nav-width: 92px;
+  /*===== Colores =====*/
+  --first-color: #4d6d99;
+  --bg-color: #1e2b37;
+  --sub-color: #B6CEFC;
+  --white-color: #FFF;
+  
+  /*===== Fuente y tipografia =====*/
+  --body-font: 'Poppins', sans-serif;
+  --normal-font-size: 1rem;
+  --small-font-size: .875rem;
+  
+  /*===== z index =====*/
+  --z-fixed: 100;
+}
+/*===== BASE =====*/
+*,::before,::after{
+  box-sizing: border-box;
+}
+.body-pd{
+  display:inline-block;
+ width:100%;
+ margin: 0 auto;
+}
+#body-pd{
+  display:inline-block;
+  width:100%;
+  margin: 0; 
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  transition: .8s;
+}
+h1{
+  margin: 0;
+}
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+/*===== l NAV =====*/
+.l-navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--nav-width);
+  height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--white-color);
+  padding: 1.5rem 1.5rem 2rem;
+  transition: .5s;
+  z-index: var(--z-fixed);
+}
+/*===== NAV =====*/
+.nav{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.nav__brand{
+  display: grid;
+  grid-template-columns: max-content max-content;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.nav__toggle{
+  font-size: 1.25rem;
+  padding: .75rem;
+  cursor: pointer;
+}
+.nav__logo{
+  color: var(--white-color);
+  font-weight: 600;
+  font-size: 30px;
+}
+.nav__link{
+  display: grid;
+  grid-template-columns: 100px max-content;
+  align-items: center;
+  column-gap: .75rem;
+  padding: .75rem;
+  color: var(--white-color);
+  border-radius: .5rem;
+  margin-bottom: 1rem;
+  transition: .3s;
+  cursor: pointer;
+   position: relative;
+}
+.nav__link:hover{
+  background-color: var(--first-color);
+}
+.nav__icon{
+  font-size: 1.25rem;
+}
+.nav__name{
+  font-size: var(--small-font-size);
+}
+/*Expander menu*/
+.expander {
+  width: calc(var(--nav-width) + 11.5rem);
+}
+
+.expander .nav__link:hover .collapse {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/*Add padding body*/
+.body-pd{
+  padding: 0rem 0 0 16rem;
+}
+/*Active links menu*/
+.active{
+  background-color: var(--first-color);
+}
+/*===== COLLAPSE =====*/
+.collapse{
+ 		 grid-template-columns: 20px max-content 1fr;
+        right: 0;
+        top: 100%;
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.8s ease;
+}
+.collapse__link{
+  justify-self: flex-end;
+  transition: .5s;
+}
+.collapse__menu{
+  display: none;
+  padding: .75rem 2.25rem;
+}
+.collapse__sublink{
+  color: var(--sub-color);
+  font-size: var(--small-font-size);
+}
+.collapse__sublink:hover{
+  color: var(--white-color);
+}
+/*Show collapse*/
+.showCollapse{
+  display: block;
+}
+/*Rotate icon*/
+.rotate{
+  transform: rotate(180deg);
+}
+.nav-link{
+color: white;
+}    
+li{
+margin-top:15px;
+margin-bottom: 20px;
+}
+li:last-child {
+	margin-bottom: 0px;
+}
+
+</style>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body id="body-pd">
+    <div class="l-navbar" id="navbar">
+        <nav class="nav">
+            <div>
+            	
+                <div class="nav__brand">
+                    <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                    <a th:href="@{/user/main}" class="nav__logo"><img src="/img/content/header/BYKHlogo.png" id="logoImg" style="width: 120px; height: 105px;"></a>
+                </div>
+                
+                <div class="nav__list">
+                	
+                	<!-- 메인 화면 -->
+                    <a th:href="@{/user/main}" class="nav__link active">
+                        <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+                        <span class="nav_name">메인화면</span>
+                    </a>
+                    
+                     
+                     <!-- 전자결재 -->
+					<div href="#" class="nav__link">
+						<a th:href="@{/sign/signMain}"><ion-icon name="log-out-outline"></ion-icon></a>
+							<a th:href="@{/sign/signMain}"><span  class="nav_name" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">전자결재</span></a>
+						<div class="collapse" id="collapseExample1">
+	   						
+						</div>             	
+ 					</div>
+ 					
+ 					<!-- 근태관리 -->
+ 					<div href="#" class="nav__link">
+                        <a th:href="@{/attendance/commute}" class="ap">  <ion-icon name="walk-outline"></ion-icon></a>
+                       		<a th:href="@{/attendance/commute}"> <span class="nav_name" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">근태관리</span></a>
+						<div class="collapse" id="collapseExample2">
+	   						<ul>
+	   						<!-- li 글자 길면 짤리니 주의 ! -->
+			    				<li class="nav-item"><a  aria-current="page" th:href="@{/attendance/commute}">출퇴근 기록</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/attendance/vacation}">휴가관리</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/attendance/calender}">캘린더</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/attendance/workingChart}">총근무 차트</a></li>
+	 						</ul>
+						</div>             	
+ 					</div>       
+          
+          
+          			<!-- 인사관리 -->
+          			<div href="#" class="nav__link" sec:authorize="hasRole('EMP')">
+                        <a th:href="@{/emp/empManage}" class="ap">   <ion-icon name="person-add-outline"></ion-icon></a>
+                       		<a th:href="@{/emp/empManage}"> <span class="nav_name" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">인사관리</span></a>
+						<div class="collapse" id="collapseExample2">
+	   						<ul>
+	   						<!-- li 글자 길면 짤리니 주의 ! -->
+			    				<li class="nav-item"><a  aria-current="page" th:href="@{/emp/empManage}">사원관리</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/dept/deptManage}">부서관리</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/dept/organizationManage}">조직도</a></li>
+	 						</ul>
+						</div>             	
+ 					</div>
+          
+                   
+ 					<!-- 조직도 -->
+	                <a th:href="@{/user/organizationMap}" class="nav__link">
+	                     <ion-icon name="people-outline"></ion-icon>
+	                     <span class="nav_name">조직도</span>
+	                </a>   
+	                
+	                
+	                <!-- 자원관리 -->
+	                <div href="#" class="nav__link">
+                        <a th:href="@{/resource/reserve}" class="ap"> <ion-icon name="file-tray-stacked-outline"></ion-icon></a>
+                       		<a th:href="@{/resource/reserve}"> <span class="nav_name" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">자원관리</span></a>
+						<div class="collapse" id="collapseExample2">
+	   						<ul>
+	   						<!-- li 글자 길면 짤리니 주의 ! -->
+			    				<li class="nav-item"><a  aria-current="page" th:href="@{/resource/reserve}">예약하기</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/resource/reservationList}">예약 내역</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/resource/reserveAll}">전체 내역</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/resource/chart}">자원 차트</a></li>
+	 						</ul>
+						</div>             	
+ 					</div> 
+	                
+	                
+	                <!-- 게시판 -->
+	                <div href="#" class="nav__link">
+                        <a th:href="@{/notice/list}" class="ap">    <ion-icon name="clipboard-outline"></ion-icon></a>
+                       		<a th:href="@{/notice/list}"> <span class="nav_name" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">게시판</span></a>
+						<div class="collapse" id="collapseExample2">
+	   						<ul>
+	   						<!-- li 글자 길면 짤리니 주의 ! -->
+			    				<li class="nav-item"><a  aria-current="page" th:href="@{/notice/list}">공지사항</a></li>
+			    				<li class="nav-item"><a aria-current="page" th:href="@{/community/list}">커뮤니티</a></li>
+	 						</ul>
+						</div>             	
+ 					</div>      
+	                
+	                
+	                <!-- 자료실 -->
+					<a th:href="@{/archive/list}" class="nav__link">
+	                    <ion-icon name="briefcase-outline"></ion-icon>
+	                    <span class="nav_name">자료실</span>
+	                </a>
+	                
+	         
+	                <!-- MRO -->
+	                <div href="#" class="nav__link">
+                        <a th:href="@{/mro/mroEmp}" class="ap">    <ion-icon name="bag-add-outline"></ion-icon></a>
+                       		<a th:href="@{/mro/mroEmp}"> <span class="nav_name" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">MRO</span></a>
+						<div class="collapse" id="collapseExample2">
+	   						<ul sec:authorize="hasRole('MRO')">
+	   						<!-- li 글자 길면 짤리니 주의 ! -->
+			    				<li class="nav-item"><a  aria-current="page" th:href="@{/mro/mroManage}">상품 관리</a></li>
+	 						</ul>
+						</div>             	
+ 					</div>  
+ 					
+	                
+	                <!-- 지사 위치 -->
+					<a th:href="@{/user/branchMap}" class="nav__link">
+	                   <ion-icon name="location-outline"></ion-icon>
+	                    <span class="nav_name">지사 위치</span>
+	                </a>
+	               
+	               
+	                <!-- 관리자문의 -->
+					<a th:href="@{/user/userAsk}" class="nav__link">
+	                   <ion-icon name="help-circle-outline"></ion-icon>
+	                    <span class="nav_name">관리자 문의</span>
+	                </a>
+	                
+				</div>
+            </div>
+        </nav>
+    </div>
+    
+    
+    
+    
+    
+    
+    <!-- IONICONS -->
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+	
+	<script type="text/javascript">
+	  /*===== EXPANDER MENU  =====*/ 
+	  const showMenu = (toggleId, navbarId, bodyId) => {
+	    const toggle = document.getElementById(toggleId);
+	    const navbar = document.getElementById(navbarId);
+	    const bodypadding = document.getElementById(bodyId);
+
+	    if (toggle && navbar) {
+	      toggle.addEventListener('click', () => {
+	        navbar.classList.toggle('expander');
+	        bodypadding.classList.toggle('body-pd');
+	      });
+	    }
+	  }
+	  
+	  showMenu('nav-toggle', 'navbar', 'body-pd');
+
+	  /*===== AUTO-CLOSE MENU ON MOUSE LEAVE  =====*/ 
+	  const navbar = document.getElementById('navbar');
+	  const navLinks = document.querySelectorAll('.nav__link');
+
+	  navbar.addEventListener('mouseleave', () => {
+	    navbar.classList.remove('expander');
+	    document.getElementById('body-pd').classList.remove('body-pd');
+
+	    navLinks.forEach(link => {
+	      link.classList.remove('active');
+	    });
+	  });
+	</script>
+
+	
+</th:block>
+
+</html>
