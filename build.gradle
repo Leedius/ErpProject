@@ -25,8 +25,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JapRepository 사용
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
-	implementation 'org.springframework:spring-web' // 웹소켓
-	implementation("org.springframework.boot:spring-boot-starter-websocket") // 웹소켓
+	//implementation 'org.springframework:spring-web' // 웹소켓
+	//implementation("org.springframework.boot:spring-boot-starter-websocket") // 웹소켓
 	
 	//implementation 'com.oracle.database.security:osdt_cert:21.3.0.0'   //오라클 클라우드
     //implementation 'com.oracle.database.security:oraclepki:21.3.0.0'   //오라클 클라우드
